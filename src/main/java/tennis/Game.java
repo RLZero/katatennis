@@ -17,8 +17,18 @@ public class Game {
         return player.getName();
     }
 
-    private boolean isDeuce() {
-        return player1.getScore().getPoint() == ScorePoint.THREE && player2.getScore().getPoint() == ScorePoint.THREE;
+    public String getScore(Player player1, Player player2) {
+        if (player1.getScore().getPoint() == ScorePoint.FOUR && player2.getScore().getPoint() == ScorePoint.FOUR) {
+            resetAdvantagePointAtDeuce();
+        }
+        if (isDeuce()) {
+            return ScoreDescription.DEUCE.toString();
+        } else if (isAdvantage()) {
+            return ScoreDescription.ADVANTAGE.toString();
+        } else if (gameSet()) {
+            return ScoreDescription.GAME_SET + SPACE + winner.getName();
+        }
+        return player1.getScore().getDescription() + "-" + player2.getScore().getDescription();
     }
 
     private void resetAdvantagePointAtDeuce() {
@@ -26,6 +36,10 @@ public class Game {
         player2.getScore().minusPoint();
         player1.setAdvantage(false);
         player2.setAdvantage(false);
+    }
+
+    private boolean isDeuce() {
+        return player1.getScore().getPoint() == ScorePoint.THREE && player2.getScore().getPoint() == ScorePoint.THREE;
     }
 
     private boolean isAdvantage() {
@@ -55,19 +69,5 @@ public class Game {
             return true;
         }
         return false;
-    }
-
-    public String getScore(Player player1, Player player2) {
-        if (player1.getScore().getPoint() == ScorePoint.FOUR && player2.getScore().getPoint() == ScorePoint.FOUR) {
-            resetAdvantagePointAtDeuce();
-        }
-        if (isDeuce()) {
-            return ScoreDescription.DEUCE.toString();
-        } else if (isAdvantage()) {
-            return ScoreDescription.ADVANTAGE.toString();
-        } else if (gameSet()) {
-            return ScoreDescription.GAME_SET + SPACE + winner.getName();
-        }
-        return player1.getScore().getDescription() + "-" + player2.getScore().getDescription();
     }
 }

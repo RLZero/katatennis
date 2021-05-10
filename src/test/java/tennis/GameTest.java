@@ -21,13 +21,6 @@ public class GameTest {
         game = new Game(player1, player2);
     }
 
-    private void setupDeuceScenario() {
-        for (int i = 0; i < THREE_ROUND; i++) {
-            game.wonPointBy(player1);
-            game.wonPointBy(player2);
-        }
-    }
-
     @Test
     public void should_increase_point_when_player_won_point() {
         game.wonPointBy(player1);
@@ -111,5 +104,12 @@ public class GameTest {
         assertEquals(ScoreDescription.DEUCE.toString(), score);
         assertEquals(ScorePoint.THREE, player1.getScore().getPoint());
         assertEquals(ScorePoint.THREE, player2.getScore().getPoint());
+    }
+
+    private void setupDeuceScenario() {
+        for (int i = 0; i < THREE_ROUND; i++) {
+            game.wonPointBy(player1);
+            game.wonPointBy(player2);
+        }
     }
 }
